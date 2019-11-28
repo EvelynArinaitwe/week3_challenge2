@@ -1,59 +1,82 @@
 class BankAccount {
-    constructor(acc_name, acc_balance) {
+    constructor(acc_name, acc_balance, status) {
         // your code here
         //initialises acc
         this.acc_name=acc_name;
         this.acc_balance=acc_balance;
+        this.status = status;
     }
 
     getBalance() {
         // your code here
+        console.log("Your balance is :"+this.acc_balance);
        return this.acc_balance;
     }
 
-    open(name,bal) {
+     setopen() {
         // your code here
-        B =new BankAccount(name,bal);
-        return B;
+        if(this.status===null){
+        this.status="active";
+        console.log(" Your account has been created.")
+        console.log(this);
+        return "acc activated";
+    }
+    else{
+        return "already activated";
+    }
     }
 
-    deposit(amount) {
+    getdeposit(amount) {
         // your code here
         // adds amount to the balance
+        if(typeof amount==='string'){
+            return 'invalid input';
+        }
+        else{
+        if(this.status!=="active"){
+            return "account "+ this.status;
+        }
+        else{
         this.acc_balance+=amount;
-        return this;
+        console.log("You have deposited "+amount+". Your balance is:"+this.acc_balance);
+        return this.acc_balance;
+    }
+    }
     }
 
-    withdraw(amount) {
+    getwithdraw(amount) {
         // your code here
         //subtracts amount from balance
+        if(this.status==="active"){
         if(this.acc_balance<amount){
-           let w= console.log("insufficient balance");
-            return w;
+           console.log("Your acc balance is insufficient!");
+            return "insufficient balance";
         }
         else if(this.acc_balance>amount){
         
         this.acc_balance-= amount;
-        return this;
+        console.log("you have withdrawn "+amount+". Your balance is:"+this.acc_balance);
+        return this.acc_balance;
     }
     else {
         this.acc_balance-= amount;
-        let w= console.log(" you are withdrawing all your money");
-        return w;  
+        console.log(" you are withdrawing all your money");
+        return this.acc_balance;  
     }
+}
+else{
+    console.log("Impossible to withdraw. acc closed");
+    return this.status;
+}
     }
 
-    close(){
-        B=null;
+    setclose(){
+        this.status="closed";
+        console.log("Your acc has been closed!");
+        console.log(this);
+        return "acc closed!"
     }
 }
 
-B= new BankAccount('evelyn', 1000000);
-B.open("kikie",1500)
-console.log(B);
-console.log(B.deposit(500));
-console.log(B.withdraw(2000));
-B.close();
-console.log("account is closed");
 
-//B.getBalance;
+module.exports = new BankAccount("eve",1000000,null);
